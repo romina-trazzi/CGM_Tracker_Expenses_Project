@@ -1,0 +1,10 @@
+.expenses-filter__control {
+    display: flex;
+    justify-content: space-between;
+    color: white;
+}
+
+select {
+    font-weight: bolder;
+    padding: 0.3rem 2rem;
+}
