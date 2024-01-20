@@ -21,7 +21,6 @@ function Expenses({ expenses }) {
     <Card className='expenses'>
       <ExpensesFilter onChangeFilter={filterChangeHandler} selectedYear={filteredYear}/>
       <ExpensesList filteredExpenses = {filteredExpenses}/>
-      
     </Card>
   );
 }

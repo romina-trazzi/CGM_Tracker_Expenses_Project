@@ -5,7 +5,11 @@ function ExpenseForm({ onSaveExpenseData }) {
   const [enteredTitle, setEnteredTitle] = useState("");
   const [enteredDate, setEnteredDate] = useState("");
   const [enteredAmount, setEnteredAmount] = useState("");
+  const [isFormOpen, setIsFormOpen] = useState(false);
 
+  const addExpenseButton = <button type='submit'>Add Expense</button>
+  const addExpenseFunctionButton = <button type='submit' onClick={formOpenHandler}>Add New Expense</button>
+  const hiddenClass = !isFormOpen ? 'hidden' : '';
   
   function titleChangeHandler(event) {
     setEnteredTitle(event.target.value);
@@ -37,12 +41,27 @@ function ExpenseForm({ onSaveExpenseData }) {
     setEnteredDate("");
   }
 
+  function formCloseHandler (event) {
+    if (isFormOpen === true) {
+      event.preventDefault();
+      setEnteredTitle("");
+      setEnteredAmount("");
+      setEnteredDate("");
+      setIsFormOpen(false);
+    }
+  }
+
+  function formOpenHandler (event) {
+    event.preventDefault();
+    setIsFormOpen(true);
+  }
+
   return (
 
     <form onSubmit={submitHandler}>
       <div className='new-expense__controls'>
 
-        <div className='new-expense__control'>
+        <div className={`new-expense__control ${hiddenClass}`}>
           <label>Title</label>
           <input 
             type='text' 
@@ -51,7 +70,7 @@ function ExpenseForm({ onSaveExpenseData }) {
             value = {enteredTitle}/>
         </div>
 
-        <div className='new-expense__control'> 
+        <div className={`new-expense__control ${hiddenClass}`}> 
 
           <label>Amount</label>
           <input
@@ -64,7 +83,7 @@ function ExpenseForm({ onSaveExpenseData }) {
           />
         </div>
 
-        <div className='new-expense__control'>
+        <div className={`new-expense__control ${hiddenClass}`}>
           <label>Date</label>
           <input
             type='date'
@@ -79,8 +98,8 @@ function ExpenseForm({ onSaveExpenseData }) {
       </div>
 
       <div className='new-expense__actions'>
-        <button type='button'>Cancel</button>
-        <button type='submit'>Add Expense</button>
+        <button type='button' className={`${hiddenClass}`} onClick={formCloseHandler}>Cancel</button>
+        {isFormOpen ? addExpenseButton : addExpenseFunctionButton}
       </div>
 
     </form>
@@ -90,6 +109,14 @@ function ExpenseForm({ onSaveExpenseData }) {
 export default ExpenseForm;
 
 
+
+/* Modify this logic a little so that there is only a button with the words "Add new expense" 
+to be shown instead of the form. 
+As you click on this button, it should disappear and the form appear. 
+By the same principle, once you have clicked the button to add the expense, 
+it will have to change again and return to being just the single button. 
+Furthermore, when the form is open there will be another "Cancel" button and when clicked the form must close 
+(without submitting, of course) and always show the single button */
 
 
 

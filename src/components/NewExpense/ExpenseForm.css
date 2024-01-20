@@ -21,6 +21,10 @@ form .new-expense__control input {
   max-width: 100%;
 }
 
+form .hidden {
+  display: none;
+}
+
 form .new-expense__actions {
   text-align: right;
 }
