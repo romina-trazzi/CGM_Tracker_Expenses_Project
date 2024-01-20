@@ -8,8 +8,9 @@ function ExpenseForm({ onSaveExpenseData }) {
   const [isFormOpen, setIsFormOpen] = useState(false);
 
   const addExpenseButton = <button type='submit'>Add Expense</button>
-  const addExpenseFunctionButton = <button type='submit' onClick={formOpenHandler}>Add New Expense</button>
+  const addExpenseFunctionButton = <button type='submit' className="" onClick={formOpenHandler}>Add New Expense</button>
   const hiddenClass = !isFormOpen ? 'hidden' : '';
+  const flexAlignClass = !isFormOpen ? 'flexAlign' : '';
   
   function titleChangeHandler(event) {
     setEnteredTitle(event.target.value);
@@ -32,7 +33,6 @@ function ExpenseForm({ onSaveExpenseData }) {
       date: new Date(enteredDate)
     }
 
-    console.log(expenseData);
     onSaveExpenseData(expenseData);
 
     // Svuotamento dei campi di input dopo l'invio del form grazie alla proprietà value negli input
@@ -59,7 +59,7 @@ function ExpenseForm({ onSaveExpenseData }) {
   return (
 
     <form onSubmit={submitHandler}>
-      <div className='new-expense__controls'>
+      <div className={`new-expense__controls ${hiddenClass}`}>
 
         <div className={`new-expense__control ${hiddenClass}`}>
           <label>Title</label>
@@ -97,7 +97,7 @@ function ExpenseForm({ onSaveExpenseData }) {
 
       </div>
 
-      <div className='new-expense__actions'>
+      <div className={`new-expense__actions ${flexAlignClass}`}>
         <button type='button' className={`${hiddenClass}`} onClick={formCloseHandler}>Cancel</button>
         {isFormOpen ? addExpenseButton : addExpenseFunctionButton}
       </div>
@@ -107,16 +107,6 @@ function ExpenseForm({ onSaveExpenseData }) {
 }
 
 export default ExpenseForm;
-
-
-
-/* Modify this logic a little so that there is only a button with the words "Add new expense" 
-to be shown instead of the form. 
-As you click on this button, it should disappear and the form appear. 
-By the same principle, once you have clicked the button to add the expense, 
-it will have to change again and return to being just the single button. 
-Furthermore, when the form is open there will be another "Cancel" button and when clicked the form must close 
-(without submitting, of course) and always show the single button */
 
 
 
