@@ -1,17 +1,12 @@
 import './ExpenseForm.css';
 import { useState } from 'react';
 
-function ExpenseForm({ onSaveExpenseData }) {
+function ExpenseForm({ onSaveExpenseData, onCancel }) {
   const [enteredTitle, setEnteredTitle] = useState("");
   const [enteredDate, setEnteredDate] = useState("");
   const [enteredAmount, setEnteredAmount] = useState("");
-  const [isFormOpen, setIsFormOpen] = useState(false);
-
-  const addExpenseButton = <button type='submit'>Add Expense</button>
-  const addExpenseFunctionButton = <button type='submit' className="" onClick={formOpenHandler}>Add New Expense</button>
-  const hiddenClass = !isFormOpen ? 'hidden' : '';
-  const flexAlignClass = !isFormOpen ? 'flexAlign' : '';
-  
+ 
+ 
   function titleChangeHandler(event) {
     setEnteredTitle(event.target.value);
   }
@@ -29,7 +24,7 @@ function ExpenseForm({ onSaveExpenseData }) {
     event.preventDefault();
     const expenseData = {
       title : enteredTitle,
-      amount: enteredAmount,
+      amount: +enteredAmount,
       date: new Date(enteredDate)
     }
 
@@ -40,28 +35,13 @@ function ExpenseForm({ onSaveExpenseData }) {
     setEnteredAmount("");
     setEnteredDate("");
   }
-
-  function formCloseHandler (event) {
-    if (isFormOpen === true) {
-      event.preventDefault();
-      setEnteredTitle("");
-      setEnteredAmount("");
-      setEnteredDate("");
-      setIsFormOpen(false);
-    }
-  }
-
-  function formOpenHandler (event) {
-    event.preventDefault();
-    setIsFormOpen(true);
-  }
-
+  
   return (
 
     <form onSubmit={submitHandler}>
-      <div className={`new-expense__controls ${hiddenClass}`}>
+      <div className="new-expense__controls">
 
-        <div className={`new-expense__control ${hiddenClass}`}>
+        <div className="new-expense__control">
           <label>Title</label>
           <input 
             type='text' 
@@ -70,7 +50,7 @@ function ExpenseForm({ onSaveExpenseData }) {
             value = {enteredTitle}/>
         </div>
 
-        <div className={`new-expense__control ${hiddenClass}`}> 
+        <div className="new-expense__control"> 
 
           <label>Amount</label>
           <input
@@ -83,7 +63,7 @@ function ExpenseForm({ onSaveExpenseData }) {
           />
         </div>
 
-        <div className={`new-expense__control ${hiddenClass}`}>
+        <div className="new-expense__control">
           <label>Date</label>
           <input
             type='date'
@@ -97,9 +77,9 @@ function ExpenseForm({ onSaveExpenseData }) {
 
       </div>
 
-      <div className={`new-expense__actions ${flexAlignClass}`}>
-        <button type='button' className={`${hiddenClass}`} onClick={formCloseHandler}>Cancel</button>
-        {isFormOpen ? addExpenseButton : addExpenseFunctionButton}
+      <div className="new-expense__actions">
+        <button type='button' onClick={onCancel}>Cancel</button>
+        <button type='submit'>Add Expense</button>
       </div>
 
     </form>

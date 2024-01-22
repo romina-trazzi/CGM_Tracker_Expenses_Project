@@ -1,7 +1,17 @@
 import './NewExpense.css';
 import ExpenseForm from './ExpenseForm';
+import { useState } from 'react';
 
 function NewExpense({ onAddExpense }) {
+
+  const [isEditing, setIsEditing] = useState(false);
+  const startEditingHandler = () => {
+    setIsEditing(true);
+  } 
+
+    const stopEditingHandler = () => {
+    setIsEditing(false);
+  } 
 
   
   /* Creazione di un nuovo oggetto per l'array expenses
@@ -12,16 +22,22 @@ function NewExpense({ onAddExpense }) {
       ...enteredExpenseData, id: Math.random().toString()
     };
     
-    console.log(expenseData);
-
     onAddExpense(expenseData);
+    setIsEditing(false);
   }
 
 
   return (
 
     <div className='new-expense'>
-      <ExpenseForm onSaveExpenseData={saveExpenseDataHandler} />
+      {!isEditing && 
+        (<button type="button" onClick={startEditingHandler}> Add new Expense </button>) 
+      }
+
+      {isEditing && 
+        (<ExpenseForm onSaveExpenseData={saveExpenseDataHandler} onCancel={stopEditingHandler}/>)
+      }
+      
     </div>
   );
 }
